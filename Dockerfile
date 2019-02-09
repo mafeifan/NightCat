@@ -1,6 +1,6 @@
 # Client App
 # 使用 Node 官方提供的镜像
-FROM node:8.12-alpine as client-app
+FROM node:10.15-alpine as client-app
 LABEL maintainer="finleyma <mafeifan@qq.com>"
 
 RUN mkdir -p /app
@@ -9,13 +9,12 @@ WORKDIR /app
 
 COPY backend ./backend
 COPY config  ./config
-COPY logs    ./logs
 COPY view/dist ./view/dist
-COPY package.json .
-COPY package-lock.json .
+COPY package*.json ./
 
 # 由于使用 npm 官方源下载较慢，故改用淘宝的源
-RUN npm config set registry https://registry.npm.taobao.org
+# RUN npm config set registry https://registry.npm.taobao.org
+
 
 # TODO npm install --production --silent
 RUN npm install
